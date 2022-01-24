@@ -477,9 +477,13 @@ static int _set_proto(transport_message* tm, const struct dnstap* m)
 {
     switch (dnstap_message_socket_protocol(*m)) {
     case DNSTAP_SOCKET_PROTOCOL_UDP:
+    case DNSTAP_SOCKET_PROTOCOL_DNSCryptUDP:
         tm->proto = IPPROTO_UDP;
         break;
     case DNSTAP_SOCKET_PROTOCOL_TCP:
+    case DNSTAP_SOCKET_PROTOCOL_DOT:
+    case DNSTAP_SOCKET_PROTOCOL_DOH:
+    case DNSTAP_SOCKET_PROTOCOL_DNSCryptTCP:
         tm->proto = IPPROTO_TCP;
         break;
     default:
@@ -518,6 +522,7 @@ static int dnstap_handler(const struct dnstap* m)
 
     switch (dnstap_message_type(*m)) {
     case DNSTAP_MESSAGE_TYPE_AUTH_QUERY:
+    case DNSTAP_MESSAGE_TYPE_UPDATE_QUERY:
         if (!dnstap_message_has_query_message(*m) || !dnstap_message_has_query_address(*m)) {
             dsyslogf(LOG_ERR, "DNSTAP: Missing parts of %s", DNSTAP_MESSAGE_TYPE_STRING[dnstap_message_type(*m)]);
             break;
@@ -552,6 +557,7 @@ static int dnstap_handler(const struct dnstap* m)
         break;
 
     case DNSTAP_MESSAGE_TYPE_AUTH_RESPONSE:
+    case DNSTAP_MESSAGE_TYPE_UPDATE_RESPONSE:
         if (!dnstap_message_has_response_message(*m) || !dnstap_message_has_query_address(*m)) {
             dsyslogf(LOG_ERR, "DNSTAP: Missing parts of %s", DNSTAP_MESSAGE_TYPE_STRING[dnstap_message_type(*m)]);
             break;
