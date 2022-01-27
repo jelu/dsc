@@ -483,19 +483,19 @@ static int _set_proto(transport_message* tm, const struct dnstap* m)
         tm->proto = IPPROTO_TCP;
         break;
     case DNSTAP_SOCKET_PROTOCOL_DOT:
-        tm->proto = IPPROTO_TCP;
+        tm->proto      = IPPROTO_TCP;
         tm->encryption = TRANSPORT_ENCRYPTION_DOT;
         break;
     case DNSTAP_SOCKET_PROTOCOL_DOH:
-        tm->proto = IPPROTO_TCP;
+        tm->proto      = IPPROTO_TCP;
         tm->encryption = TRANSPORT_ENCRYPTION_DOH;
         break;
     case DNSTAP_SOCKET_PROTOCOL_DNSCryptUDP:
-        tm->proto = IPPROTO_UDP;
+        tm->proto      = IPPROTO_UDP;
         tm->encryption = TRANSPORT_ENCRYPTION_DNSCrypt;
         break;
     case DNSTAP_SOCKET_PROTOCOL_DNSCryptTCP:
-        tm->proto = IPPROTO_TCP;
+        tm->proto      = IPPROTO_TCP;
         tm->encryption = TRANSPORT_ENCRYPTION_DNSCrypt;
         break;
     default:
